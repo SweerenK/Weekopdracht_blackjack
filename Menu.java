@@ -7,6 +7,7 @@ public class Menu {
 	String[] hoofdmenuOpties = {"Begin met spelen", "Uitleg", "Stoppen"};
 	String[] uitlegOpties = {"Hoe werkt Blackjack?","Hoeveel zijn de kaarten waard?","Wat zijn de commands?", "Terug.."};
 	Scanner scan = new Scanner(System.in);
+	Spel spel = new Spel();
 	
 	void hoofdmenu() {
 		System.out.println("Blackjack!");
@@ -21,13 +22,12 @@ public class Menu {
 	
 	void bepaalVervolgactie(int hoofdmenuKeuze) {
 		if(hoofdmenuKeuze == 1) {
-			Spel spel = new Spel();
 			spel.setupSpelers();
 			spel.beginSpel();
 		}else if(hoofdmenuKeuze == 2){
 			uitlegMenu();
 		}else {
-			sluitProgramma();
+			spel.sluitProgramma();
 		}
 	}
 	
@@ -41,12 +41,18 @@ public class Menu {
 		switch(uitlegOptie) {
 		case 1:
 			uitlegSpel();
+			wachtOpEnter();
+			uitlegMenu();
 			break;
 		case 2:
 			uitlegKaartWaardes();
+			wachtOpEnter();
+			uitlegMenu();
 			break;
 		case 3:
 			uitlegCommands();
+			wachtOpEnter();
+			uitlegMenu();
 			break;
 		default:
 			hoofdmenu();
@@ -55,34 +61,22 @@ public class Menu {
 		
 	void uitlegSpel() {
 		System.out.println("Probeer maximaal 21 punten te krijgen.\nJe verliest als je meer dan 21 punten hebt.\nJe mag passen als je minder dan 21 punten hebt.");
-		wachtOpEnter();
-		uitlegMenu();
 	}
 	void uitlegKaartWaardes() {
 		System.out.println("KAART\tWAARDE");
 		System.out.println("A\t11\n2\t2\n3\t3\n4\t4\n5\t5\n6\t6\n7\t7\n8\t8\n9\t9\n10\t10\nB\t10\nQ\t10\nK\t10");
-		wachtOpEnter();
-		uitlegMenu();
 	}
 	
 	void uitlegCommands() {
 		System.out.println("ACTIE\tUITLEG");
 		System.out.println("k\tNieuwe kaart\np\tPass beurt\ns\tSplit kaarten\nd\tDouble down\nq\tStop spel");
-		wachtOpEnter();
-		uitlegMenu();
 	}
 	
 	void wachtOpEnter() {
 		System.out.println("\nDoorgaan? (j/n)");
 		String voortgang = scan.next();
 		if(voortgang.equals("n"))
-			sluitProgramma();
+			spel.sluitProgramma();
+			
 	}
-	
-	void sluitProgramma() {
-		System.out.println("Het programma wordt gesloten.");
-		System.exit(0);
-	}
-	
-
 }

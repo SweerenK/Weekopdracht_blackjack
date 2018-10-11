@@ -16,8 +16,6 @@ public class Spel {
 		Menu showMenu = new Menu();
 		showMenu.hoofdmenu();
 
-		// Kaarten cards = new Kaarten();
-		// cards.verdeelKaarten(startSpel);
 	}
 
 	void setupSpelers() {
@@ -48,12 +46,10 @@ public class Spel {
 		geefEersteKaarten(2);
 
 		while (doorspelen) {
-
-			// startSpel.deelKaartenBijStart();
-
-			doorspelen = false;
-			// speel door totdat false
-
+			System.out.println("\nJe hebt " + getPuntenaantal() + ". Wat wil je doen?\n(Typ 'help' voor info)");
+			String command = scan.next();
+			commandChecker(command);
+			// hier verder
 		}
 	}
 
@@ -68,9 +64,59 @@ public class Spel {
 			}
 		}
 	}
+	
+	void trekKaartInSpel(Spelers z, int spelersindex) {
+		alleSpelers.get(spelersindex).gekregenKaarten.add(spelBegint.geefKaart());
+		spelBegint.verwijderBovensteKaart();
+		alleSpelers.get(0).berekenPuntenaantal();
+		toonSpelvoortgang(alleSpelers.get(spelersindex));
+	}
+
+	void commandChecker(String tekst) {
+		switch (tekst) {
+		case "help":
+			Menu helpCommands = new Menu();
+			helpCommands.uitlegCommands();
+			break;
+		case "q":
+			sluitProgramma();
+			break;
+		case "k":
+			trekKaartInSpel(alleSpelers.get(0), 0);
+			//controleer en door of andere spelers
+			break;
+		case "p":
+			doorspelen = false;
+			alleSpelers.get(0).berekenPuntenaantal();
+			System.out.println("Speler past met (" + alleSpelers.get(0).puntenaantal + "): \t"+alleSpelers.get(0).gekregenKaarten);
+			//andere spelers doen hun zetten
+			break;
+		case "d":
+			// double down
+			System.out.println("d");
+			// geef 1 kaart en andere spelers doen hun zetten
+			break;
+		case "s":
+			System.out.println("s");
+			// split: twee handen
+			//andere spelers doen hun zetten
+			break;
+		default:
+			// geen actie gedefinieerd
+		}
+	}
+
+	int getPuntenaantal() {
+		return alleSpelers.get(0).puntenaantal;
+	}
 
 	void toonSpelvoortgang(Spelers a) {
 		a.berekenPuntenaantal();
 		System.out.println(a + " (" + a.puntenaantal + "):\t" + a.gekregenKaarten);
+	}
+	
+	void sluitProgramma() {
+		System.out.println("Het programma wordt gesloten.");
+		System.exit(0);
 	}
 }

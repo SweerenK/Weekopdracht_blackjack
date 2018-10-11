@@ -56,17 +56,6 @@ public class Kaartendeck {
 		return waarde;
 	}
 
-	// Methoden Kaarten geven
-	/*
-	void deelKaartenBijStart() {
-		for (int y = 0; y < Spel.aantalSpelers; y++) {
-			Spel.alleSpelers.get(y).gekregenKaarten.add(deck.get(0));
-			System.out.println("Speler " + Spel.alleSpelers.get(y) + " heeft gekregen: "
-					+ Spel.alleSpelers.get(y).gekregenKaarten);
-			deck.remove(0);
-		}
-	} */
-
 	Kaarten geefKaart() {
 		return deck.get(0);
 	}
