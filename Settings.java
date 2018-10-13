@@ -4,12 +4,12 @@ import java.util.Scanner;
 
 public class Settings {
 	private int aantalSpelers = 0;
-	private int[][] defaultChipAmounts = {{500, 250, 100}, {100, 250, 500}}; 
+	private int[][] defaultChipAmounts = { { 500, 250, 100 }, { 100, 250, 500 } };
 	static private int startAmountPlayer = 250, startAmountOpponent = 250;
 	private int standaardInzet = 10;
 	private String spelerNaam = "Jij";
 	private Scanner scan = new Scanner(System.in);
-	private boolean doorspelen = true, AIspeelt=false, doubledown = false;
+	private boolean doorspelen = true, AIspeelt = false, doubledown = false;
 
 	public boolean isDoubledown() {
 		return doubledown;
@@ -26,6 +26,7 @@ public class Settings {
 	public void setStandaardInzet(int standaardInzet) {
 		this.standaardInzet = standaardInzet;
 	}
+
 	public boolean isAIspeelt() {
 		return AIspeelt;
 	}
@@ -59,7 +60,7 @@ public class Settings {
 	public void setStartAmountPlayer(int chipcount) {
 		startAmountPlayer = chipcount;
 	}
-	
+
 	public int getStartAmountOpponent() {
 		return startAmountOpponent;
 	}
@@ -67,16 +68,18 @@ public class Settings {
 	public void setStartAmountOpponent(int chipcount) {
 		startAmountOpponent = chipcount;
 	}
-	
+
 	public void setNewStartAmount() {
-		System.out.println(
-				"Met hoeveel chips begin jij?\n1.\t" + defaultChipAmounts[0][0] + " chips (makkelijk)\n2.\t" + defaultChipAmounts[0][1] +" chips (gemiddeld)\n3.\t" + defaultChipAmounts[0][2] +" chips (moeilijk)\n4.\tAnder aantal");
-		startAmountPlayer = setSpelerStartAmount(scan.nextInt());  
-		System.out.println(
-				"Met hoeveel chips begint/beginnen jouw tegenstander(s)?\n1.\t" + defaultChipAmounts[1][0] +" chips (makkelijk)\n2.\t" + defaultChipAmounts[1][1] + " chips (gemiddeld)\n3.\t" + defaultChipAmounts[1][2] +" chips (moeilijk)\n4.\tAnder aantal");
+		System.out.println("Met hoeveel chips begin jij?\n1.\t" + defaultChipAmounts[0][0] + " chips (makkelijk)\n2.\t"
+				+ defaultChipAmounts[0][1] + " chips (gemiddeld)\n3.\t" + defaultChipAmounts[0][2]
+				+ " chips (moeilijk)\n4.\tAnder aantal");
+		startAmountPlayer = setSpelerStartAmount(scan.nextInt());
+		System.out.println("Met hoeveel chips begint/beginnen jouw tegenstander(s)?\n1.\t" + defaultChipAmounts[1][0]
+				+ " chips (makkelijk)\n2.\t" + defaultChipAmounts[1][1] + " chips (gemiddeld)\n3.\t"
+				+ defaultChipAmounts[1][2] + " chips (moeilijk)\n4.\tAnder aantal");
 		startAmountOpponent = setOpponentStartAmount(scan.nextInt());
 	}
-	
+
 	int setSpelerStartAmount(int choice) {
 		switch (choice) {
 		case 1:
@@ -91,7 +94,7 @@ public class Settings {
 			return 250;
 		}
 	}
-	
+
 	public int setOpponentStartAmount(int choice) {
 		switch (choice) {
 		case 1:
@@ -111,9 +114,7 @@ public class Settings {
 		return spelerNaam;
 	}
 
-	public void setSpelerNaam() {
-		System.out.println("Wat is je naam?");
-		String spelerNaam = scan.next();
+	public void setSpelerNaam(String spelerNaam) {
 		this.spelerNaam = spelerNaam;
 	}
 

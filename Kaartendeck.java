@@ -4,17 +4,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Kaartendeck {
-	String[] kaartsoort = { "harten", "klaveren", "ruiten", "schoppen" };
-	String[] kaartwaarde = { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "B", "Q", "K" };
+	private String[] kaartsoort = { "harten", "klaveren", "ruiten", "schoppen" };
+	private String[] kaartwaarde = { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "B", "Q", "K" };
 	static ArrayList<Kaarten> deck = new ArrayList<Kaarten>();
 
 	void vulDeck() {
 		for (int x = 0; x < kaartsoort.length; x++) {
 			for (int y = 0; y < kaartwaarde.length; y++) {
 				Kaarten kaart = new Kaarten();
-				kaart.kaartsoort = kaartsoort[x];
-				kaart.kaartwaarde = kaartwaarde[y];
-				kaart.kaartRekenWaarde = bepaalKaartRekenWaarde(y);
+				kaart.setKaartsoort(kaartsoort[x]);
+				kaart.setKaartwaarde(kaartwaarde[y]);
+				kaart.setKaartRekenWaarde(bepaalKaartRekenWaarde(y));
 				deck.add(kaart);
 			}
 		}

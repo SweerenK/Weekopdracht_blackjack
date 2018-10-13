@@ -5,13 +5,13 @@ import java.util.Scanner;
 
 public class Spel {
 	static ArrayList<Spelers> alleSpelers = new ArrayList<Spelers>();
-	Spelers player;
-	Kaartendeck spelBegint = new Kaartendeck();
-	Settings setting = new Settings();
-	Tegenstanders tegenstander = new Tegenstanders();
+	private Spelers player;
+	private Kaartendeck spelBegint = new Kaartendeck();
+	private Settings setting = new Settings();
+	private Tegenstanders tegenstander = new Tegenstanders();
 	static Menu showMenu = new Menu();
 	private Scanner scan = new Scanner(System.in);
-	int aantalGames = 0;
+	private int aantalGames = 0;
 
 	public static void main(String[] args) {
 		showMenu.hoofdmenu();
@@ -21,21 +21,21 @@ public class Spel {
 		setting.setAantalSpelers();
 		maakSpelers();
 		player = alleSpelers.get(0);
-		player.naam = setting.getSpelerNaam();
+		player.setNaam(setting.getSpelerNaam());
 
 		if (alleSpelers.size() > 1) {
-			alleSpelers.get(alleSpelers.size() - 1).naam = "Dealer";
+			alleSpelers.get(alleSpelers.size() - 1).setNaam("Dealer");
 		}
 	}
 
 	void maakSpelers() {
 		for (int x = 0; x < setting.getAantalSpelers(); x++) {
 			Spelers nieuweSpeler = new Spelers();
-			nieuweSpeler.naam = "Gast " + (x + 1);
+			nieuweSpeler.setNaam("Gast " + (x + 1));
 			if (x == 0) {
-				nieuweSpeler.chipcount = setting.getStartAmountPlayer();
+				nieuweSpeler.setChipcount(setting.getStartAmountPlayer());
 			} else {
-				nieuweSpeler.chipcount = setting.getStartAmountOpponent();
+				nieuweSpeler.setChipcount(setting.getStartAmountOpponent());
 			}
 			alleSpelers.add(nieuweSpeler);
 		}
@@ -70,7 +70,7 @@ public class Spel {
 		}
 		System.out.println("===== Einde Game " + aantalGames + " =====\n");
 
-		if (player.chipcount > 0) {
+		if (player.getChipcount() > 0) {
 			beginSpel(); // !
 		} else {
 			System.out.println("Je hebt onvoldoende chips om door te spelen.\nHet spel is afgelopen.");
@@ -109,10 +109,10 @@ public class Spel {
 		case "k":
 			trekKaartInSpel(player, 0);
 			player.berekenPuntenaantal();
-			if (checkBusted(player.puntenaantal)) {
+			if (checkBusted(player.getPuntenaantal())) {
 				setting.setDoorspelen(false);
-				System.out
-						.println("Helaas! Je hebt (" + Math.min(player.puntenaantal[0], player.puntenaantal[1]) + ")");
+				System.out.println(
+						"Helaas! Je hebt (" + Math.min(player.getPuntenaantal()[0], player.getPuntenaantal()[1]) + ")");
 				beurtVoorbij();
 			}
 			break;
@@ -124,27 +124,29 @@ public class Spel {
 			beurtVoorbij();
 			break;
 		case "d":
-			System.out.println("Double down! Deze game wordt de inzet verdubbeld naar " + 2*setting.getStandaardInzet() + ".");
+			System.out.println(
+					"Double down! Deze game wordt de inzet verdubbeld naar " + 2 * setting.getStandaardInzet() + ".");
 			System.out.print("Jouw laatste kaart: ");
-			// vanaf hier nieuw
 			setting.setDoubledown(true);
 			trekKaartInSpel(player, 0);
 			player.berekenPuntenaantal();
 			setting.setDoorspelen(false);
-			if (checkBusted(player.puntenaantal)) {
-				System.out.println("Helaas! Je hebt (" + Math.min(player.puntenaantal[0], player.puntenaantal[1]) + ")");
+			if (checkBusted(player.getPuntenaantal())) {
+				System.out.println(
+						"Helaas! Je hebt (" + Math.min(player.getPuntenaantal()[0], player.getPuntenaantal()[1]) + ")");
 			}
 			beurtVoorbij();
-			
-			//tot hier
-			
-			// geef 1 kaart en andere spelers doen hun zetten
+
 			break;
 		case "s":
 			System.out.println("Split is nog niet geimplementeerd. Maak een andere keuze.");
 			// split: twee handen
-			// andere spelers doen hun zetten
+			// beurtVoorbij()
 			break;
+		case "m":
+			System.out.println("Het spel wordt afgebroken en je keert terug naar het menu.\n");
+			resetNewTourney();
+			showMenu.hoofdmenu();
 		default:
 			// geen actie gedefinieerd
 		}
@@ -154,14 +156,21 @@ public class Spel {
 		ArrayList<Kaarten> spelerArray = alleSpelers.get(spelersindex).gekregenKaarten;
 		spelerArray.add(spelBegint.geefKaart());
 		spelBegint.verwijderBovensteKaart();
-		//alleSpelers.get(spelersindex).berekenPuntenaantal();
 		System.out.println(alleSpelers.get(spelersindex) + " pakt " + spelerArray.get(spelerArray.size() - 1));
 	}
-
+	
+	void resetNewTourney() {
+		alleSpelers.clear();
+		setting.setSpelerNaam("Jij");
+		setting.setDoorspelen(true);
+		setting.setAIspeelt(false);
+		setting.setDoubledown(false);
+		setting.setStartAmountPlayer(250);
+		setting.setStartAmountOpponent(250);
+	}
 	void resetNewGame() {
 		for (Spelers x : alleSpelers) {
-			x.puntenaantal[0] = 0;
-			x.puntenaantal[1] = 0;
+			x.setPuntenaantal(new int[] { 0, 0 });
 			x.gekregenKaarten.clear();
 		}
 		setting.setDoorspelen(true);
@@ -170,9 +179,9 @@ public class Spel {
 
 	void checkIfWinner(Spelers speler) {
 		speler.berekenPuntenaantal();
-		int[] speleraantal = speler.puntenaantal;
+		int[] speleraantal = speler.getPuntenaantal();
 		int spelerpunten, dealerpunten;
-		int[] dealeraantal = alleSpelers.get(alleSpelers.size() - 1).puntenaantal;
+		int[] dealeraantal = alleSpelers.get(alleSpelers.size() - 1).getPuntenaantal();
 
 		if (Math.max(speleraantal[0], speleraantal[1]) < 22) {
 			spelerpunten = Math.max(speleraantal[0], speleraantal[1]);
@@ -191,26 +200,27 @@ public class Spel {
 				System.out.print("\n\tPush! Je krijgt je inzet terug.\n");
 			}
 
-		} else if (((spelerpunten > dealerpunten) && (spelerpunten < 22)) || ((dealerpunten > 21 && spelerpunten < 22))) {
+		} else if (((spelerpunten > dealerpunten) && (spelerpunten < 22))
+				|| ((dealerpunten > 21 && spelerpunten < 22))) {
 			if (alleSpelers.indexOf(speler) == 0) {
 				System.out.print("\n\tGefeliciteerd, jij wint!\n");
 			}
-			if(setting.isDoubledown()) {
-				speler.chipcount += setting.getStandaardInzet();
-				}
-			if (checkBlackjack(speler)) {
-				System.out.println(speler.naam + " krijgt anderhalf keer de inzet terug wegens blackjack.");
-				speler.chipcount += 0.5 * setting.getStandaardInzet();
+			if (setting.isDoubledown()) {
+				speler.setChipcount(speler.getChipcount() + setting.getStandaardInzet());
 			}
-			speler.chipcount += setting.getStandaardInzet();
-		}else {
+			if (checkBlackjack(speler)) {
+				System.out.println(speler.getNaam() + " krijgt anderhalf keer de inzet terug wegens blackjack.");
+				speler.setChipcount(speler.getChipcount() + (int)0.5*setting.getStandaardInzet());
+			}
+			speler.setChipcount(speler.getChipcount() + setting.getStandaardInzet());
+		} else {
 			if (alleSpelers.indexOf(speler) == 0) {
 				System.out.print("\n\tJe verliest je inzet.\n");
 			}
-			if(setting.isDoubledown()) {
-			speler.chipcount -= setting.getStandaardInzet();
+			if (setting.isDoubledown()) {
+				speler.setChipcount(speler.getChipcount() - setting.getStandaardInzet());
 			}
-			speler.chipcount -= setting.getStandaardInzet();
+			speler.setChipcount(speler.getChipcount() - setting.getStandaardInzet());
 		}
 
 	}
@@ -231,9 +241,9 @@ public class Spel {
 	}
 
 	boolean checkBlackjack(Spelers a) {
-		if (Math.max(a.puntenaantal[0], a.puntenaantal[1]) == 21 && a.gekregenKaarten.size() == 2) {
-			a.puntenaantal[0] = 21;
-			a.puntenaantal[1] = 21;
+		if (Math.max(a.getPuntenaantal()[0], a.getPuntenaantal()[1]) == 21 && a.getGekregenKaarten().size() == 2) {
+			a.getPuntenaantal()[0] = 21;
+			a.getPuntenaantal()[1] = 21;
 			return true;
 		} else {
 			return false;
@@ -244,18 +254,16 @@ public class Spel {
 		a.berekenPuntenaantal();
 		if (checkBlackjack(a)) {
 			if (alleSpelers.get(alleSpelers.size() - 1) != a) {
-				System.out
-						.println(a.chipcount + " chips\t" + a + "\t\t" + "(21)\t" + a.gekregenKaarten + "\tBLACKJACK!");
+				System.out.println(a.getChipcount() + " chips\t" + a + "\t\t" + "(21)\t" + a.getGekregenKaarten() + "\tBLACKJACK!");
 			} else {
-				System.out.println("\t\t" + a + "\t\t" + "(21)\t" + a.gekregenKaarten + "\tBLACKJACK!");
+				System.out.println("\t\t" + a + "\t\t" + "(21)\t" + a.getGekregenKaarten() + "\tBLACKJACK!");
 			}
 		} else if (alleSpelers.indexOf(a) != alleSpelers.size() - 1) {
 			System.out.println(
-					a.chipcount + " chips\t" + a + "\t\t" + "(" + a.getPuntenaantal(a) + ")\t" + a.gekregenKaarten);
+					a.getChipcount() + " chips\t" + a + "\t\t" + "(" + a.getPuntenaantal(a) + ")\t" + a.getGekregenKaarten());
 		} else {
-			System.out.println("\t\t" + a + "\t\t" + "(" + a.getPuntenaantal(a) + ")\t" + a.gekregenKaarten);
+			System.out.println("\t\t" + a + "\t\t" + "(" + a.getPuntenaantal(a) + ")\t" + a.getGekregenKaarten());
 		}
-
 	}
 
 	boolean checkBusted(int[] waarde) {
@@ -268,6 +276,7 @@ public class Spel {
 
 	void sluitProgramma() {
 		System.out.println("Het programma wordt gesloten.");
+		scan.close();
 		System.exit(0);
 	}
 }
