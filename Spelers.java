@@ -29,20 +29,55 @@ public class Spelers {
 		}
 		
 		for(int kaart = 0; kaart < gekregenKaarten.size() ; kaart++) {
-			for(int y = 0; y < puntenaantal.length; y++) {
+			//for(int y = 0; y < puntenaantal.length; y++) {
 				if(gekregenKaarten.get(kaart).kaartRekenWaarde != 11) {
-					puntenaantal[y] += gekregenKaarten.get(kaart).kaartRekenWaarde;
-				}else {
-					if(y>0) {
-						if(Math.min(puntenaantal[0], puntenaantal[1]) <10 && Math.min(puntenaantal[0], puntenaantal[1]) != 0) {
+					//puntenaantal[y] += gekregenKaarten.get(kaart).kaartRekenWaarde;
+					puntenaantal[0] += gekregenKaarten.get(kaart).kaartRekenWaarde;
+					puntenaantal[1] += gekregenKaarten.get(kaart).kaartRekenWaarde;
+				}
+				
+				else {
+					if(puntenaantal[0] < 11) {
+						if(puntenaantal[1]>11) {
+							puntenaantal[0] += 1;
+							puntenaantal[1] += 1;
+						}else if(puntenaantal[0] == 1 && puntenaantal[1] == 11){
+							puntenaantal[0] += 1;
+							puntenaantal[1] += 1;
+						}else{
+							puntenaantal[0] += 1;
+							puntenaantal[1] += 11;
+						}
+					}else if(puntenaantal[0] > 10) {
+						if(puntenaantal[1]>11) {
+							puntenaantal[0] += 1;
+							puntenaantal[1] += 1;
+						}
+					}else{
+						System.out.println("ELSE-SPELER");
+						puntenaantal[0] += 1;
+						puntenaantal[1] += 11;
+				}
+					/*		if(y==1) {
+						
+						
+						
+						
+						
+						if((Math.min(puntenaantal[0], puntenaantal[1]) > 10) && (Math.min(puntenaantal[0], puntenaantal[1]) <21)) {
 							puntenaantal[0] -= 10;
-							//
+						}else if((Math.min(puntenaantal[0], puntenaantal[1]) >11) && (Math.max(puntenaantal[0], puntenaantal[1]) < 22)) {
+							puntenaantal[0] -= 10;
+						}else if((Math.min(puntenaantal[0], puntenaantal[1]) == 0) && (Math.max(puntenaantal[0], puntenaantal[1]) > 0)){
+							puntenaantal[0] -= 10;
+						}else {
 						}
 						puntenaantal[y] += gekregenKaarten.get(kaart).kaartRekenWaarde;
+						
 					}else {
 						puntenaantal[y] += gekregenKaarten.get(kaart).kaartRekenWaarde;
-					}
-				}
+					}																			*/
+				
 				if(gekregenKaarten.get(kaart).kaartRekenWaarde == 11 && puntenaantal[0] == 11) {
 					puntenaantal[0]-=10;
 				}

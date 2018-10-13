@@ -12,22 +12,24 @@ public class Tegenstanders {
 		int minscore = Math.min(deSpelers.get(deSpelers.indexOf(p)).puntenaantal[0],
 				deSpelers.get(deSpelers.indexOf(p)).puntenaantal[1]);
 		Boolean busted = false;
-		
+		p.berekenPuntenaantal();
 		if(deSpelers.get(deSpelers.size()-1) != p) {
-		while (Math.max(p.puntenaantal[0], p.puntenaantal[1]) < 12) {
+		while (Math.max(p.puntenaantal[0], p.puntenaantal[1]) < 15) {
 			hetSpel.trekKaartInSpel(p, deSpelers.indexOf(p));
 			p.berekenPuntenaantal();
 			if (hetSpel.checkBusted(deSpelers.get(deSpelers.indexOf(p)).puntenaantal)) {
-				System.out.println(p.naam + " bust met (" + minscore + ")");
+				String eindwaarde = p.getPuntenaantal(p);
+				System.out.println(p.naam + " bust met (" + eindwaarde + ")");
 				busted = true;
 			}
 		}
 		}else {
-			while (Math.max(p.puntenaantal[0], p.puntenaantal[1]) < 16) {
+			while (Math.min(p.puntenaantal[0], p.puntenaantal[1]) < 16) {
 				hetSpel.trekKaartInSpel(p, deSpelers.indexOf(p));
 				p.berekenPuntenaantal();
 				if (hetSpel.checkBusted(deSpelers.get(deSpelers.indexOf(p)).puntenaantal)) {
-					System.out.println(p.naam + " bust met (" + minscore + ")");
+					String eindwaarde = p.getPuntenaantal(p);
+					System.out.println(p.naam + " bust met (" + eindwaarde + ")");
 					busted = true;
 				}
 			}
@@ -38,7 +40,6 @@ public class Tegenstanders {
 					deSpelers.get(deSpelers.indexOf(p)).puntenaantal[1]);
 			int maxscore = Math.max(deSpelers.get(deSpelers.indexOf(p)).puntenaantal[0],
 					deSpelers.get(deSpelers.indexOf(p)).puntenaantal[1]);
-
 			if (maxscore < 22) {
 				System.out.println(p.naam + " past met (" + maxscore + ")");
 			} else {

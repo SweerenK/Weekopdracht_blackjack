@@ -63,7 +63,7 @@ public class Spel {
 		}
 		System.out.println("\tTyp 'v' voor vervolg..");
 		while (!scan.next().equals("v")) {
-			if(scan.next().equals("q")) {
+			if (scan.next().equals("q")) {
 				sluitProgramma();
 			}
 			System.out.println("\tTyp 'v' voor vervolg..");
@@ -120,7 +120,7 @@ public class Spel {
 			setting.setDoorspelen(false);
 			player.berekenPuntenaantal();
 			String eindwaarde = player.getPuntenaantal(player);
-			System.out.println("Speler past met (" + eindwaarde + "): \t" + player.gekregenKaarten);
+			System.out.println(setting.getSpelerNaam() + " past met (" + eindwaarde + "): \t" + player.gekregenKaarten);
 			beurtVoorbij();
 			break;
 		case "d":
@@ -142,9 +142,8 @@ public class Spel {
 		ArrayList<Kaarten> spelerArray = alleSpelers.get(spelersindex).gekregenKaarten;
 		spelerArray.add(spelBegint.geefKaart());
 		spelBegint.verwijderBovensteKaart();
-		alleSpelers.get(spelersindex).berekenPuntenaantal();
+		//alleSpelers.get(spelersindex).berekenPuntenaantal();
 		System.out.println(alleSpelers.get(spelersindex) + " pakt " + spelerArray.get(spelerArray.size() - 1));
-		// toonSpelvoortgang(alleSpelers.get(spelersindex));
 	}
 
 	void resetNewGame() {
@@ -173,26 +172,26 @@ public class Spel {
 		} else {
 			dealerpunten = Math.min(dealeraantal[0], dealeraantal[1]);
 		}
-		
-		if (spelerpunten == dealerpunten) {
-			if(alleSpelers.indexOf(speler) == 0) {
+
+		if ((spelerpunten == dealerpunten) && (spelerpunten < 22)) {
+			if (alleSpelers.indexOf(speler) == 0) {
 				System.out.print("\n\tPush! Je krijgt je inzet terug.\n");
 			}
-			
-		} else if (spelerpunten < dealerpunten) {
+
+		} else if (((spelerpunten > dealerpunten) && (spelerpunten < 22)) || ((dealerpunten > 21 && spelerpunten < 22))) {
+			if (alleSpelers.indexOf(speler) == 0) {
+				System.out.print("\n\tGefeliciteerd, jij wint!\n");
+			}
+			if (checkBlackjack(speler)) {
+				System.out.println(speler.naam + " krijgt anderhalf keer de inzet terug wegens blackjack.");
+				speler.chipcount += 0.5 * setting.getStandaardInzet();
+			}
+			speler.chipcount += setting.getStandaardInzet();
+		}else {
 			if (alleSpelers.indexOf(speler) == 0) {
 				System.out.print("\n\tJe verliest je inzet.\n");
 			}
 			speler.chipcount -= setting.getStandaardInzet();
-		} else {
-			if (alleSpelers.indexOf(speler) == 0) {
-				System.out.print("\n\tGefeliciteerd, je wint!\n");
-			}
-			if(checkBlackjack(speler)) {
-				System.out.println(speler.naam + " heeft blackjack en krijgt anderhalf keer de inzet terug.");
-				speler.chipcount += 0.5*setting.getStandaardInzet();
-			}
-			speler.chipcount += setting.getStandaardInzet();
 		}
 
 	}
@@ -225,9 +224,10 @@ public class Spel {
 	void toonSpelvoortgang(Spelers a) {
 		a.berekenPuntenaantal();
 		if (checkBlackjack(a)) {
-			if(alleSpelers.get(alleSpelers.size()-1) != a) {
-				System.out.println(a.chipcount + " chips\t" + a + "\t\t" + "(21)\t" + a.gekregenKaarten + "\tBLACKJACK!");
-			}else {
+			if (alleSpelers.get(alleSpelers.size() - 1) != a) {
+				System.out
+						.println(a.chipcount + " chips\t" + a + "\t\t" + "(21)\t" + a.gekregenKaarten + "\tBLACKJACK!");
+			} else {
 				System.out.println("\t\t" + a + "\t\t" + "(21)\t" + a.gekregenKaarten + "\tBLACKJACK!");
 			}
 		} else if (alleSpelers.indexOf(a) != alleSpelers.size() - 1) {
