@@ -9,7 +9,15 @@ public class Settings {
 	private int standaardInzet = 10;
 	private String spelerNaam = "Jij";
 	private Scanner scan = new Scanner(System.in);
-	private boolean doorspelen = true, AIspeelt=false;
+	private boolean doorspelen = true, AIspeelt=false, doubledown = false;
+
+	public boolean isDoubledown() {
+		return doubledown;
+	}
+
+	public void setDoubledown(boolean doubledown) {
+		this.doubledown = doubledown;
+	}
 
 	public int getStandaardInzet() {
 		return standaardInzet;

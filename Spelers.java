@@ -54,30 +54,10 @@ public class Spelers {
 							puntenaantal[1] += 1;
 						}
 					}else{
-						System.out.println("ELSE-SPELER");
 						puntenaantal[0] += 1;
 						puntenaantal[1] += 11;
 				}
-					/*		if(y==1) {
-						
-						
-						
-						
-						
-						if((Math.min(puntenaantal[0], puntenaantal[1]) > 10) && (Math.min(puntenaantal[0], puntenaantal[1]) <21)) {
-							puntenaantal[0] -= 10;
-						}else if((Math.min(puntenaantal[0], puntenaantal[1]) >11) && (Math.max(puntenaantal[0], puntenaantal[1]) < 22)) {
-							puntenaantal[0] -= 10;
-						}else if((Math.min(puntenaantal[0], puntenaantal[1]) == 0) && (Math.max(puntenaantal[0], puntenaantal[1]) > 0)){
-							puntenaantal[0] -= 10;
-						}else {
-						}
-						puntenaantal[y] += gekregenKaarten.get(kaart).kaartRekenWaarde;
-						
-					}else {
-						puntenaantal[y] += gekregenKaarten.get(kaart).kaartRekenWaarde;
-					}																			*/
-				
+					
 				if(gekregenKaarten.get(kaart).kaartRekenWaarde == 11 && puntenaantal[0] == 11) {
 					puntenaantal[0]-=10;
 				}

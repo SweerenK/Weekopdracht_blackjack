@@ -108,7 +108,7 @@ public class Spel {
 			break;
 		case "k":
 			trekKaartInSpel(player, 0);
-			player.berekenPuntenaantal(); // TEST
+			player.berekenPuntenaantal();
 			if (checkBusted(player.puntenaantal)) {
 				setting.setDoorspelen(false);
 				System.out
@@ -124,12 +124,24 @@ public class Spel {
 			beurtVoorbij();
 			break;
 		case "d":
-			// double down
-			System.out.println("Double down is nog niet geimplementeerd.");
+			System.out.println("Double down! Deze game wordt de inzet verdubbeld naar " + 2*setting.getStandaardInzet() + ".");
+			System.out.print("Jouw laatste kaart: ");
+			// vanaf hier nieuw
+			setting.setDoubledown(true);
+			trekKaartInSpel(player, 0);
+			player.berekenPuntenaantal();
+			setting.setDoorspelen(false);
+			if (checkBusted(player.puntenaantal)) {
+				System.out.println("Helaas! Je hebt (" + Math.min(player.puntenaantal[0], player.puntenaantal[1]) + ")");
+			}
+			beurtVoorbij();
+			
+			//tot hier
+			
 			// geef 1 kaart en andere spelers doen hun zetten
 			break;
 		case "s":
-			System.out.println("Split is nog niet geimplementeerd.");
+			System.out.println("Split is nog niet geimplementeerd. Maak een andere keuze.");
 			// split: twee handen
 			// andere spelers doen hun zetten
 			break;
@@ -153,6 +165,7 @@ public class Spel {
 			x.gekregenKaarten.clear();
 		}
 		setting.setDoorspelen(true);
+		setting.setDoubledown(false);
 	}
 
 	void checkIfWinner(Spelers speler) {
@@ -182,6 +195,9 @@ public class Spel {
 			if (alleSpelers.indexOf(speler) == 0) {
 				System.out.print("\n\tGefeliciteerd, jij wint!\n");
 			}
+			if(setting.isDoubledown()) {
+				speler.chipcount += setting.getStandaardInzet();
+				}
 			if (checkBlackjack(speler)) {
 				System.out.println(speler.naam + " krijgt anderhalf keer de inzet terug wegens blackjack.");
 				speler.chipcount += 0.5 * setting.getStandaardInzet();
@@ -190,6 +206,9 @@ public class Spel {
 		}else {
 			if (alleSpelers.indexOf(speler) == 0) {
 				System.out.print("\n\tJe verliest je inzet.\n");
+			}
+			if(setting.isDoubledown()) {
+			speler.chipcount -= setting.getStandaardInzet();
 			}
 			speler.chipcount -= setting.getStandaardInzet();
 		}
