@@ -3,31 +3,39 @@ package weekopdracht.v3;
 import java.util.Scanner;
 
 public class Menu {
-	String titel = "Blackjack!";
-	String[] hoofdmenuOpties = {"Begin met spelen", "Uitleg", "Stoppen"};
+	String[] hoofdmenuOpties = {"Begin met spelen", "Wijzig instellingen", "Uitleg", "Stoppen"};
 	String[] uitlegOpties = {"Hoe werkt Blackjack?","Hoeveel zijn de kaarten waard?","Wat zijn de commands?", "Terug.."};
 	Scanner scan = new Scanner(System.in);
 	Spel spel = new Spel();
+	Settings setting = new Settings();
 	
 	void hoofdmenu() {
 		System.out.println("Blackjack!");
 		for(int x = 0; x < hoofdmenuOpties.length; x++) {
 			System.out.println((x+1) + ".\t" + hoofdmenuOpties[x]);
 		}
-		
-		bepaalVervolgactie(scan.nextInt());
-		// eigen method
-		
+		bepaalVervolgHoofdmenu(scan.nextInt());	
 	}
 	
-	void bepaalVervolgactie(int hoofdmenuKeuze) {
-		if(hoofdmenuKeuze == 1) {
+	void bepaalVervolgHoofdmenu(int hoofdmenuKeuze) {
+		switch(hoofdmenuKeuze) {
+		case 1:
 			spel.setupSpelers();
 			spel.beginSpel();
-		}else if(hoofdmenuKeuze == 2){
+			break;
+		case 2:
+			setting.setSpelerNaam();
+			setting.setNewStartAmount();
+			hoofdmenu();
+			break;
+		case 3:
 			uitlegMenu();
-		}else {
+			break;
+		case 4:
 			spel.sluitProgramma();
+			break;
+		default:
+			hoofdmenu();
 		}
 	}
 	
@@ -75,8 +83,14 @@ public class Menu {
 	void wachtOpEnter() {
 		System.out.println("\nDoorgaan? (j/n)");
 		String voortgang = scan.next();
-		if(voortgang.equals("n"))
-			spel.sluitProgramma();
-			
+		if(voortgang.equals("n")) {
+			System.out.println("Weet je zeker dat je het programma wilt sluiten? (j/n)");
+			voortgang = scan.next();
+			if(voortgang.equals("j")) {
+				spel.sluitProgramma();
+			}else {
+				wachtOpEnter();
+			}
+		}	
 	}
 }

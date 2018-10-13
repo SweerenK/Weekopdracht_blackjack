@@ -8,13 +8,6 @@ public class Kaartendeck {
 	String[] kaartwaarde = { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "B", "Q", "K" };
 	static ArrayList<Kaarten> deck = new ArrayList<Kaarten>();
 
-	// Methoden Kaartendeck
-
-	void maakDeck() {
-		vulDeck();
-		schudDeck();
-	}
-
 	void vulDeck() {
 		for (int x = 0; x < kaartsoort.length; x++) {
 			for (int y = 0; y < kaartwaarde.length; y++) {
@@ -32,7 +25,7 @@ public class Kaartendeck {
 	}
 
 	void toonDeck() {
-		System.out.println("Het deck is geschud: \n" + deck);
+		System.out.println("Het deck is geschud: " + deck + "\n");
 	}
 
 	int bepaalKaartRekenWaarde(int indexWaarde) {
