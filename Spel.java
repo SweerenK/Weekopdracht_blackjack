@@ -278,15 +278,15 @@ public class Spel {
 		a.berekenPuntenaantal();
 		if (checkBlackjack(a)) {
 			if (alleSpelers.get(alleSpelers.size() - 1) != a) {
-				System.out.println(a.getChipcount() + " chips\t" + a + "\t\t" + "(21)\t" + a.getGekregenKaarten() + "\tBLACKJACK!");
+				System.out.println(a.getChipcount() + " chips\t" + a.getNaam() + "\t\t" + "(21)\t" + a.getGekregenKaarten() + "\tBLACKJACK!");
 			} else {
-				System.out.println("\t\t" + a + "\t\t" + "(21)\t" + a.getGekregenKaarten() + "\tBLACKJACK!");
+				System.out.println("\t\t" + a.getNaam() + "\t\t" + "(21)\t" + a.getGekregenKaarten() + "\tBLACKJACK!");
 			}
 		} else if (alleSpelers.indexOf(a) != alleSpelers.size() - 1) {
 			System.out.println(
-					a.getChipcount() + " chips\t" + a + "\t\t" + "(" + a.getPuntenaantal(a) + ")\t" + a.getGekregenKaarten());
+					a.getChipcount() + " chips\t" + a.getNaam() + "\t\t" + "(" + a.getPuntenaantal(a) + ")\t" + a.getGekregenKaarten());
 		} else {
-			System.out.println("\t\t" + a + "\t\t" + "(" + a.getPuntenaantal(a) + ")\t" + a.getGekregenKaarten());
+			System.out.println("\t\t" + a.getNaam() + "\t\t" + "(" + a.getPuntenaantal(a) + ")\t" + a.getGekregenKaarten());
 		}
 	}
 

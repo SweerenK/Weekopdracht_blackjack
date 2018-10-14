@@ -27,11 +27,13 @@ public class Menu {
 		case 1:
 			spel.resetNewGame();
 			spel.setupSpelers();
+			spel.alleSpelers.get(0).setNaam(setting.getSpelerNaam());
 			spel.beginSpel();
 			break;
 		case 2:
 			System.out.println("Wat is je naam?");
-			setting.setSpelerNaam(scan.next());
+			String naam = scan.next();
+			setting.setSpelerNaam(naam);
 			setting.setNewStartAmount();
 			hoofdmenu();
 			break;

@@ -73,11 +73,11 @@ public class Settings {
 		System.out.println("Met hoeveel chips begin jij?\n1.\t" + defaultChipAmounts[0][0] + " chips (makkelijk)\n2.\t"
 				+ defaultChipAmounts[0][1] + " chips (gemiddeld)\n3.\t" + defaultChipAmounts[0][2]
 				+ " chips (moeilijk)\n4.\tAnder aantal");
-		startAmountPlayer = setSpelerStartAmount(scan.nextInt());
+		setStartAmountPlayer(setSpelerStartAmount(scan.nextInt()));
 		System.out.println("Met hoeveel chips begint/beginnen jouw tegenstander(s)?\n1.\t" + defaultChipAmounts[1][0]
 				+ " chips (makkelijk)\n2.\t" + defaultChipAmounts[1][1] + " chips (gemiddeld)\n3.\t"
 				+ defaultChipAmounts[1][2] + " chips (moeilijk)\n4.\tAnder aantal");
-		startAmountOpponent = setOpponentStartAmount(scan.nextInt());
+		setStartAmountOpponent(setOpponentStartAmount(scan.nextInt()));
 	}
 
 	int setSpelerStartAmount(int choice) {
@@ -95,7 +95,7 @@ public class Settings {
 		}
 	}
 
-	public int setOpponentStartAmount(int choice) {
+	int setOpponentStartAmount(int choice) {
 		switch (choice) {
 		case 1:
 			return 100;
