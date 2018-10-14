@@ -48,7 +48,7 @@ public class Settings {
 	}
 
 	public void setAantalSpelers() {
-		System.out.println("Hoeveel spelers? (Inclusief jezelf en dealer)");
+		System.out.println("Hoeveel spelers? (Max. 10 spelers, inclusief jezelf en dealer)");
 		int aantalSpelers = scan.nextInt();
 		this.aantalSpelers = aantalSpelers;
 	}

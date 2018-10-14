@@ -56,24 +56,25 @@ public class Menu {
 		switch (uitlegOptie) {
 		case 1:
 			uitlegSpel();
-			wachtOpEnter();
-			uitlegMenu();
+			endSubMenu();
 			break;
 		case 2:
 			uitlegKaartWaardes();
-			wachtOpEnter();
-			uitlegMenu();
+			endSubMenu();
 			break;
 		case 3:
 			uitlegCommands();
-			wachtOpEnter();
-			uitlegMenu();
+			endSubMenu();
 			break;
 		default:
 			hoofdmenu();
 		}
 	}
 
+	void endSubMenu() {
+		wachtOpEnter();
+		uitlegMenu();
+	}
 	void uitlegSpel() {
 		System.out.println(
 				"Probeer maximaal 21 punten te krijgen.\nJe verliest als je meer dan 21 punten hebt.\nJe mag passen als je minder dan 21 punten hebt.");
